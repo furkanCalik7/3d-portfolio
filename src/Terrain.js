@@ -39,11 +39,20 @@ export default function generateTerrainMesh(
 
   geometry.computeVertexNormals();
 
+  const phongMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00000,
+    flatShading: true,
+    shininess: 0,
+  });
+
   const material = new THREE.MeshBasicMaterial({
     color: 0xffffff,
     wireframe: true,
+    transparent: true,
   });
 
-  const terrain = new THREE.Mesh(geometry, material);
+  const terrain = new THREE.Mesh(geometry, phongMaterial);
+  const wireframe = new THREE.Mesh(geometry, material);
+  terrain.add(wireframe);
   return terrain;
 }

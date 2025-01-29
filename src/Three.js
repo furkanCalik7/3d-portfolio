@@ -59,11 +59,11 @@ export default class Three {
     const cameraHelper = new THREE.CameraHelper(this.camera);
     this.scene.add(cameraHelper);
 
-    const size = 10;
-    const divisions = 10;
+    // const size = 10;
+    // const divisions = 10;
 
-    const gridHelper = new THREE.GridHelper(size, divisions);
-    this.scene.add(gridHelper);
+    // const gridHelper = new THREE.GridHelper(size, divisions);
+    // this.scene.add(gridHelper);
 
     window.addEventListener("resize", () => this.onWindowResize(), false);
   }
