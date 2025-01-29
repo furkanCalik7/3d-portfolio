@@ -1,4 +1,7 @@
 import * as THREE from "three";
+import { LineGeometry } from "three/addons/lines/LineGeometry.js";
+import { Line2 } from "three/addons/lines/Line2.js";
+import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 
 export default function generateTerrainMesh(
   width = 10,
@@ -31,19 +34,33 @@ export default function generateTerrainMesh(
       indices.push(b, d, c);
     }
   }
-  geometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(vertices, 3)
-  );
-  geometry.setIndex(indices);
 
-  geometry.computeVertexNormals();
+  const lineGeometry = new LineGeometry();
+  lineGeometry.setPositions(vertices);
+  //   geometry.setAttribute(
+  //     "position",
+  //     new THREE.Float32BufferAttribute(vertices, 3)
+  //   );
 
-  const material = new THREE.MeshBasicMaterial({
+  //   geometry.setIndex(indices);
+
+  //   geometry.computeVertexNormals();
+
+  const lineMat = new LineMaterial({
     color: 0xffffff,
-    wireframe: true,
+    lineWidth: 5,
+
+    dashed: false,
   });
 
-  const terrain = new THREE.Mesh(geometry, material);
-  return terrain;
+  //   const material = new THREE.MeshBasicMaterial({
+  //     color: 0xffffff,
+  //     wireframe: true,
+  //   });
+
+  //   const terrain = new THREE.Mesh(lineGeometry, lineMat);
+  const line = new Line2(lineGeometry, lineMat);
+  line.computeLineDistances();
+  line.scale.set(1, 1, 1);
+  return line;
 }
