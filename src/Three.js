@@ -56,8 +56,8 @@ export default class Three {
     const axesHelper = new THREE.AxesHelper(5);
     this.scene.add(axesHelper);
 
-    const cameraHelper = new THREE.CameraHelper(this.camera);
-    this.scene.add(cameraHelper);
+    // const cameraHelper = new THREE.CameraHelper(this.camera);
+    // this.scene.add(cameraHelper);
 
     // const size = 10;
     // const divisions = 10;
@@ -68,11 +68,13 @@ export default class Three {
     window.addEventListener("resize", () => this.onWindowResize(), false);
   }
 
-  animate() {
-    window.requestAnimationFrame(this.animate.bind(this));
+  animate(callback = () => {}) {
+    window.requestAnimationFrame(this.animate.bind(this, callback));
     this.render();
     this.stats.update();
     this.orbitControls.update();
+
+    callback();
   }
 
   render() {

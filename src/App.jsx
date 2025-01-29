@@ -9,22 +9,27 @@ function App() {
   useEffect(() => {
     const three = new Three("three");
     three.initialize();
-    three.animate();
 
-    function heightFunction(x, y) {
-      return 2 * Math.sin(x) * Math.cos(y);
-    }
+    const textureLoader = new THREE.TextureLoader();
 
-    const terrain = generateTerrainMesh(50, 50, 150, 150, heightFunction);
-    const quaternion = new THREE.Quaternion();
+    textureLoader.load("/src/assets/noiseTexture.png", (texture) => {
+      const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
+      const quaternion = new THREE.Quaternion();
 
-    quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-    terrain.setRotationFromQuaternion(quaternion);
-    terrain.scale.multiplyScalar(10);
+      quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+      terrain.setRotationFromQuaternion(quaternion);
+      terrain.scale.multiplyScalar(10);
 
-    three.scene.add(terrain);
+      three.scene.add(terrain);
+    });
+
+    // three.scene.add(terrain);
     three.camera.position.y = 10;
     three.camera.position.z = 30;
+
+    three.animate(() => {
+      three.camera.position.x -= 0.02;
+    });
   }, []);
   return (
     <>
