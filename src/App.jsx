@@ -1,50 +1,28 @@
 import { useEffect } from "react";
 import * as THREE from "three";
 import "./App.css";
+import Three from "./Three.js";
+import generateTerrainMesh from "./Terrain.js";
+import { cameraFar } from "three/tsl";
 
 function App() {
   useEffect(() => {
-    const scene = new THREE.Scene();
+    const three = new Three("three");
+    three.initialize();
+    three.animate();
 
-    const camera = new THREE.PerspectiveCamera(
-      50,
-      window.innerWidth / window.innerHeight,
-      1,
-      1000
-    );
-    camera.position.z = 96;
+    function heightFunction(x, y) {
+      return Math.sin(x) * Math.cos(y); // Example height function
+    }
 
-    const canvas = document.getElementById("three");
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-    });
+    // Generate the terrain mesh
+    const terrain = generateTerrainMesh(20, 20, 50, 50, heightFunction);
+    terrain.position.x = 10;
+    // three.scene.add(terrain);
+    three.camera.position.y = 10;
+    three.camera.position.z = 30;
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    ambientLight.castShadow = true;
-    scene.add(ambientLight);
-
-    const spotLight = new THREE.SpotLight(0xffffff, 1);
-    spotLight.castShadow = true;
-    spotLight.position.set(0, 64, 32);
-    scene.add(spotLight);
-
-    const boxGeometry = new THREE.BoxGeometry(16, 16, 16);
-    const meshMaterial = new THREE.MeshNormalMaterial();
-    const mesh = new THREE.Mesh(boxGeometry, meshMaterial);
-    scene.add(mesh);
-
-    const animate = () => {
-      renderer.render(scene, camera);
-      mesh.rotation.x += 0.01;
-      mesh.rotation.y += 0.01;
-      window.requestAnimationFrame(animate);
-    };
-
-    animate();
+    // three.camera.lookAt(terrain.position);
   }, []);
   return (
     <>
