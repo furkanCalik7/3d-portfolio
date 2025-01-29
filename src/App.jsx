@@ -12,13 +12,17 @@ function App() {
     three.animate();
 
     function heightFunction(x, y) {
-      return Math.sin(x) * Math.cos(y); // Example height function
+      return Math.sin(x) * Math.cos(y);
     }
 
-    // Generate the terrain mesh
-    const terrain = generateTerrainMesh(20, 20, 50, 50, heightFunction);
-    terrain.position.x = 10;
-    // three.scene.add(terrain);
+    const terrain = generateTerrainMesh(30, 30, 50, 50, heightFunction);
+    const quaternion = new THREE.Quaternion();
+
+    quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+    terrain.setRotationFromQuaternion(quaternion);
+    terrain.scale.multiplyScalar(5);
+
+    three.scene.add(terrain);
     three.camera.position.y = 10;
     three.camera.position.z = 30;
 
