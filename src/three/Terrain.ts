@@ -1,23 +1,25 @@
 import * as THREE from "three";
 
 export default function generateTerrainMesh(
-  texture,
-  width = 10,
-  height = 10,
-  segmentsX = 10,
-  segmentsY = 10,
-  amplitude = 1
-  //   heightFunction = null
-) {
+  texture: THREE.Texture,
+  width: number = 10,
+  height: number = 10,
+  segmentsX: number = 10,
+  segmentsY: number = 10,
+  amplitude: number = 1
+): THREE.Mesh {
   const geometry = new THREE.BufferGeometry();
 
   const canvas = document.createElement("canvas");
   canvas.width = texture.image.width;
   canvas.height = texture.image.height;
   const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new Error("Could not get canvas context");
+  }
   ctx.drawImage(texture.image, 0, 0);
 
-  const vertices = [];
+  const vertices: number[] = [];
   for (let i = 0; i <= segmentsX; i++) {
     for (let j = 0; j <= segmentsY; j++) {
       const x = (i / segmentsX) * width - width / 2;
@@ -39,7 +41,8 @@ export default function generateTerrainMesh(
     }
   }
 
-  const indices = [];
+  // Generate indices for the geometry
+  const indices: number[] = [];
   for (let i = 0; i < segmentsX; i++) {
     for (let j = 0; j < segmentsY; j++) {
       const a = i * (segmentsY + 1) + j;
@@ -61,7 +64,7 @@ export default function generateTerrainMesh(
   geometry.computeVertexNormals();
 
   const phongMaterial = new THREE.MeshPhongMaterial({
-    color: 0x00000,
+    color: 0x000000, // Fixed typo: 0x00000 -> 0x000000
     flatShading: true,
     shininess: 0,
   });
@@ -75,5 +78,6 @@ export default function generateTerrainMesh(
   const terrain = new THREE.Mesh(geometry, phongMaterial);
   const wireframe = new THREE.Mesh(geometry, material);
   terrain.add(wireframe);
+
   return terrain;
 }
