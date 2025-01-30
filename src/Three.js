@@ -36,10 +36,10 @@ export default class Three {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(this.renderer.domElement);
 
-    this.orbitControls = new OrbitControls(
-      this.camera,
-      this.renderer.domElement
-    );
+    // this.orbitControls = new OrbitControls(
+    //   this.camera,
+    //   this.renderer.domElement
+    // );
 
     this.stats = new Stats();
     document.body.appendChild(this.stats.dom);
@@ -72,7 +72,7 @@ export default class Three {
     window.requestAnimationFrame(this.animate.bind(this, callback));
     this.render();
     this.stats.update();
-    this.orbitControls.update();
+    // this.orbitControls.update();
 
     callback();
   }

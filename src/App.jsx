@@ -3,7 +3,7 @@ import * as THREE from "three";
 import "./App.css";
 import Three from "./Three.js";
 import generateTerrainMesh from "./Terrain.js";
-import { cameraFar } from "three/tsl";
+import { Stack, Box } from "@chakra-ui/react";
 
 function App() {
   useEffect(() => {
@@ -23,18 +23,30 @@ function App() {
       three.scene.add(terrain);
     });
 
-    // three.scene.add(terrain);
-    three.camera.position.y = 10;
-    three.camera.position.z = 30;
+    three.camera.position.x = 100;
+    three.camera.position.y = 23;
+    three.camera.position.z = 107;
 
     three.animate(() => {
-      three.camera.position.x -= 0.02;
+      // three.camera.position.x -= 0.02;
+      // console.log(three.camera.position);
     });
   }, []);
   return (
     <>
       <div>
         <canvas id="three"></canvas>
+        <div>
+          <Stack>
+            <Box background="tomato" width="%100" padding="4" color="white">
+              This is a box
+            </Box>
+
+            <Box background="tomato" width="%100" padding="4" color="white">
+              This is a box
+            </Box>
+          </Stack>
+        </div>
       </div>
     </>
   );
