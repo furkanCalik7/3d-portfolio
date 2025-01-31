@@ -6,6 +6,7 @@ import {
   VStack,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import InfoCard from "./card";
 
 export default function HeroSection() {
   const textSize = useBreakpointValue({ base: "3xl", md: "4xl", lg: "6xl" });
@@ -13,18 +14,7 @@ export default function HeroSection() {
 
   return (
     <>
-      {hero(textSize, subTextSize)}
-      <Box
-        height="100vh"
-        width="100%"
-        bgGradient="linear(to-r, #0F2027, #203A43, #2C5364)" // Dark gradient background
-        color="white"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        textAlign="center"
-        px={6}
-      >
+      <InfoCard>
         <VStack
           gap={6}
           p={6}
@@ -32,71 +22,93 @@ export default function HeroSection() {
             animation: "fade-in 1000ms ease-out",
           }}
           borderRadius="lg"
-          bg="rgba(0, 0, 0, 0.6)" // Transparent background for readability
-          backdropFilter="blur(10px)" // Glassmorphism effect
+          bg="rgba(0, 0, 0, 0.6)"
+          backdropFilter="blur(10px)"
+          boxShadow="lg"
+          data-state="open"
+        >
+          <Heading as="h1" fontSize={textSize} fontWeight="bold">
+            Hi, I'm Furkan 👋
+          </Heading>
+          <Text fontSize={subTextSize} maxW="2xl">
+            A passionate{" "}
+            <Span fontWeight="bold">Software Engineer & Game Developer </Span>,
+            crafting innovative digital experiences. 🚀
+          </Text>
+        </VStack>
+      </InfoCard>
+      <InfoCard>
+        <VStack
+          gap={6}
+          p={6}
+          _open={{
+            animation: "fade-in 1000ms ease-out",
+          }}
+          borderRadius="lg"
+          bg="rgba(0, 0, 0, 0.6)"
+          backdropFilter="blur(10px)"
           boxShadow="lg"
           data-state="open"
           maxW="2xl"
         >
           <Text fontSize={subTextSize}>
-            I'm a Computer Scientist passionate.
+            🚀 Always eager to learn and take on new challenges, I’m currently
+            diving into game development with Unity and Unreal Engine.
           </Text>
           <Text fontSize={subTextSize}>
-            🌱 I'm always excited to learn and work on projects that push the
-            boundaries of technology! I love algorithms and I’m exploring game
-            development with Unity and Unreal Engine.
+            🎮 My passion lies in crafting immersive experiences through game
+            development, 3D design, and computer graphics.
           </Text>
           <Text fontSize={subTextSize}>
-            🤔 My interests lie in stories that shape people, imagination, the
-            world, me, and you. I'm diving into game development and 3D design.
+            ✨ I’m fascinated by stories that shape people, spark imagination,
+            and bring worlds to life.
           </Text>
           <Text fontSize={subTextSize}>
-            💼 I’ve completed my bachelor’s degree in Computer Science.
+            🎓 I hold a Bachelor's degree in Computer Science from Bilkent
+            University.
           </Text>
           <Text fontSize={subTextSize}>
-            ⚡ I'm on the lookout for Stein Gate.
+            🔍 Currently, I'm on a quest to discover{" "}
+            <Span fontWeight="bold">Steins;Gate </Span>.
           </Text>
         </VStack>
-      </Box>
+      </InfoCard>
+      <InfoCard>
+        <VStack
+          gap={6}
+          p={6}
+          _open={{
+            animation: "fade-in 1000ms ease-out",
+          }}
+          borderRadius="lg"
+          bg="rgba(0, 0, 0, 0.6)"
+          backdropFilter="blur(10px)"
+          boxShadow="lg"
+          data-state="open"
+          maxW="2xl"
+        >
+          <Text fontSize={subTextSize}>
+            🚀 Always eager to learn and take on new challenges, I’m currently
+            diving into game development with Unity and Unreal Engine.
+          </Text>
+          <Text fontSize={subTextSize}>
+            🎮 My passion lies in crafting immersive experiences through game
+            development, 3D design, and computer graphics.
+          </Text>
+          <Text fontSize={subTextSize}>
+            ✨ I’m fascinated by stories that shape people, spark imagination,
+            and bring worlds to life.
+          </Text>
+          <Text fontSize={subTextSize}>
+            🎓 I hold a Bachelor's degree in Computer Science from Bilkent
+            University.
+          </Text>
+          <Text fontSize={subTextSize}>
+            🔍 Currently, I'm on a quest to discover{" "}
+            <Span fontWeight="bold">Steins;Gate </Span>.
+          </Text>
+        </VStack>
+      </InfoCard>
     </>
   );
 }
-
-const hero = (
-  textSize: string | undefined,
-  subTextSize: string | undefined
-) => (
-  <Box
-    height="100vh"
-    width="100%"
-    bgGradient="linear(to-r, #0F2027, #203A43, #2C5364)" // Dark gradient background
-    color="white"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    textAlign="center"
-    px={6}
-  >
-    <VStack
-      gap={6}
-      p={6}
-      _open={{
-        animation: "fade-in 1000ms ease-out",
-      }}
-      borderRadius="lg"
-      bg="rgba(0, 0, 0, 0.6)" // Transparent background for readability
-      backdropFilter="blur(10px)" // Glassmorphism effect
-      boxShadow="lg"
-      data-state="open"
-    >
-      <Heading as="h1" fontSize={textSize} fontWeight="bold">
-        Hi, I'm Furkan 👋
-      </Heading>
-      <Text fontSize={subTextSize} maxW="2xl">
-        A passionate{" "}
-        <Span fontWeight="bold">Software Engineer & Game Developer </Span>,
-        crafting innovative digital experiences. 🚀
-      </Text>
-    </VStack>
-  </Box>
-);
