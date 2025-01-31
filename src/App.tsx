@@ -4,8 +4,10 @@ import "./App.css";
 import Three from "./three/Three";
 import generateTerrainMesh from "./three/Terrain";
 import Navbar from "./components/ui/navbar";
-import InfoList from "./components/ui/infolist";
+import HomePage from "./pages/home";
 import generateStarParticles from "./three/Stars";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import WorkPage from "./pages/works";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -13,12 +15,14 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <Router>
       <canvas id="three"></canvas>
-      <Navbar>
-        <InfoList></InfoList>
-      </Navbar>
-    </>
+      <Navbar>{/* <InfoList></InfoList> */}</Navbar>
+      <Routes>
+        <Route path="/" element={<HomePage></HomePage>} />
+        <Route path="/works" element={<WorkPage></WorkPage>} />
+      </Routes>
+    </Router>
   );
 };
 

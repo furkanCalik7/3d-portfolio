@@ -1,15 +1,17 @@
 import {
+  Center,
   Heading,
   Span,
   Text,
   VStack,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import InfoCard from "./card";
+import InfoCard from "../components/ui/card";
 
-export default function HeroSection() {
+export default function HomePage() {
   const textSize = useBreakpointValue({ base: "3xl", md: "4xl", lg: "6xl" });
   const subTextSize = useBreakpointValue({ base: "md", md: "lg", lg: "xl" });
+  const alignment = "center";
 
   return (
     <>
@@ -49,31 +51,29 @@ export default function HeroSection() {
           backdropFilter="blur(10px)"
           boxShadow="lg"
           data-state="open"
+          align={"start"}
           maxW="2xl"
           zIndex={1}
         >
           <Text fontSize={subTextSize}>
-            🚀 Always eager to learn and take on new challenges, I’m currently
-            diving into game development with Unity and Unreal Engine.
+            I am a new grad 25 year old{" "}
+            <Span fontWeight={"bold"}> game programmer</Span>.
           </Text>
-          <Text fontSize={subTextSize}>
-            🎮 My passion lies in crafting immersive experiences through game
-            development, 3D design, and computer graphics.
-          </Text>
-          <Text fontSize={subTextSize}>
-            ✨ I’m fascinated by stories that shape people, spark imagination,
-            and bring worlds to life.
-          </Text>
-          <Text fontSize={subTextSize}>
-            🎓 I hold a Bachelor's degree in Computer Science from Bilkent
-            University.
-          </Text>
-          <Text fontSize={subTextSize}>
-            🔍 Currently, I'm on a quest to discover{" "}
-            <Span fontWeight="bold">Steins;Gate </Span>.
+          <Text fontSize={subTextSize} textAlign="justify">
+            I describe myself as a{" "}
+            <Span fontWeight={"bold"}>problem solver </Span>that seeks
+            opportunities to learn new things, at the same time, constantly{" "}
+            <Span fontWeight={"bold"}>improving my skills</Span>. I enjoy
+            creating games that feel great to play, with clean code that is easy
+            to read. I thrive on difficult challenges, maybe a little too much
+            sometimes as I have a hard time letting go if I can not come up with
+            a solution during a coding session. Want to know more? You can find
+            my contact information in my resume at the top. You can also reach
+            me on any of my social media.
           </Text>
         </VStack>
       </InfoCard>
+
       <InfoCard>
         <VStack
           gap={4}

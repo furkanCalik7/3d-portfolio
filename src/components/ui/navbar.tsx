@@ -1,38 +1,27 @@
 "use client";
 
 import { Box, Button, Flex, HStack } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   children?: React.ReactNode;
 }
 
-const Links = ["Home", "About", "Projects", "Skills", "Contact"];
+const Links = [
+  { name: "Home", path: "/" },
+  { name: "Works", path: "/works" },
+  { name: "Projects", path: "/projects" },
+  { name: "Contact", path: "/contact" },
+];
 
-const NavLink = (props: Props) => {
+const Navbar = (props: Props) => {
+  const navigate = useNavigate();
   const { children } = props;
 
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: "gray.700",
-      }}
-    >
-      {children}
-    </Box>
-  );
-};
-
-export default function Navbar(props: Props) {
-  const { children } = props;
   return (
     <>
       <Box
-        bg={"black"}
+        bg="black"
         px={4}
         position="fixed"
         top={0}
@@ -40,12 +29,18 @@ export default function Navbar(props: Props) {
         right={0}
         zIndex={1}
       >
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <HStack gap={8} alignItems={"center"}>
-            <HStack as={"nav"} gap={4} display={{ base: "none", md: "flex" }}>
+        <Flex h={16} alignItems="center" justifyContent="space-between">
+          <HStack gap={8} alignItems="center">
+            <HStack as="nav" gap={4} display={{ base: "none", md: "flex" }}>
               {Links.map((link) => (
-                <Button key={link} bg="black" color="white">
-                  {link}
+                <Button
+                  key={link.name}
+                  bg="black"
+                  color="white"
+                  _hover={{ bg: "gray.700" }}
+                  onClick={() => navigate(link.path)}
+                >
+                  {link.name}
                 </Button>
               ))}
             </HStack>
@@ -55,4 +50,6 @@ export default function Navbar(props: Props) {
       {children}
     </>
   );
-}
+};
+
+export default Navbar;
