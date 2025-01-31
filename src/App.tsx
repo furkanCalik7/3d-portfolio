@@ -5,12 +5,12 @@ import Three from "./three/Three";
 import generateTerrainMesh from "./three/Terrain";
 import Navbar from "./components/ui/navbar";
 import InfoList from "./components/ui/infolist";
-import generateStarsMesh from "./three/Stars";
+import generateStarParticles from "./three/Stars";
 
 const App: React.FC = () => {
   useEffect(() => {
     initThree();
-  }, []); // Ensures `initThree` runs only once on component mount
+  }, []);
 
   return (
     <>
@@ -36,16 +36,13 @@ const initThree = () => {
       terrain.scale.multiplyScalar(10);
       three.scene.add(terrain);
 
-      const stars = generateStarsMesh(10000);
+      const stars = generateStarParticles(10000);
       three.scene.add(stars);
     }
   );
 
-  // Initialize camera and start animation loop
-  three.camera.position.set(100, 23, 107); // Ensure camera is positioned properly
-  three.animate(() => {
-    // Potentially control or update camera here if needed
-  });
+  three.camera.position.set(100, 50, 107);
+  three.animate(() => {});
 };
 
 export default App;

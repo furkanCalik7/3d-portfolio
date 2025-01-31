@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-const generateStarsMesh = (starCount: number) => {
+const generateStarParticles = (starCount: number) => {
     const geometry = new THREE.BufferGeometry();
     const vertices = []
 
@@ -25,4 +25,4 @@ const generateStarsMesh = (starCount: number) => {
 }
 
 
-export default generateStarsMesh
+export default generateStarParticles

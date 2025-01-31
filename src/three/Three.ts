@@ -10,7 +10,7 @@ export default class Three {
   private _camera: THREE.PerspectiveCamera;
   private _renderer: THREE.WebGLRenderer;
   private _clock: THREE.Clock;
-  private _orbitControls: OrbitControls; // Add OrbitControls
+  private _orbitControls?: OrbitControls; // Add OrbitControls
 
   constructor(canvasId: string) {
     this._fov = 45;
@@ -35,19 +35,15 @@ export default class Three {
 
     this._renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: true,
+      antialias: true
     });
     this._renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(this._renderer.domElement);
     document.body.appendChild(this._stats.dom);
 
-    // Initialize OrbitControls
-    this._orbitControls = new OrbitControls(this._camera, this._renderer.domElement);
-    this._orbitControls.target.set(0, 0, 0); // Set the target to the scene center
-    this._orbitControls.update(); // Update controls
-
     this.initLights();
     this.initHelpers();
+    this.initOrbitControls();
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
   }
@@ -63,6 +59,15 @@ export default class Three {
     this._scene.add(spotLight);
   }
 
+  private initOrbitControls(): void {
+    this._orbitControls = new OrbitControls(this._camera, this._renderer.domElement);
+    this._orbitControls.target.set(0, 50, 0); 
+    this._orbitControls.autoRotateSpeed = 0.5;
+    this._orbitControls.autoRotate = true;
+    this._orbitControls.enabled = false;
+    this._orbitControls.update();
+  }
+
   private initHelpers(): void {
     const axesHelper = new THREE.AxesHelper(5);
     this._scene.add(axesHelper);
@@ -71,7 +76,7 @@ export default class Three {
   public animate(callback: () => void = () => {}): void {
     window.requestAnimationFrame(() => this.animate(callback));
     this._stats.update();
-    this._orbitControls.update(); // Update OrbitControls in the animation loop
+    this._orbitControls?.update();
     this.render();
     callback();
   }
@@ -98,7 +103,7 @@ export default class Three {
     return this._renderer;
   }
 
-  get orbitControls(): OrbitControls {
+  get orbitControls(): OrbitControls | undefined {
     return this._orbitControls;
   }
 }
