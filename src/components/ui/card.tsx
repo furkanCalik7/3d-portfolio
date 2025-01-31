@@ -19,6 +19,7 @@ const InfoCard = (props: Props) => {
         justifyContent="center"
         textAlign="center"
         px={6}
+        zIndex={1}
       >
         {children}
       </Box>

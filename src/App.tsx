@@ -5,9 +5,13 @@ import Three from "./three/Three";
 import generateTerrainMesh from "./three/Terrain";
 import Navbar from "./components/ui/navbar";
 import InfoList from "./components/ui/infolist";
+import generateStarsMesh from "./three/Stars";
 
 const App: React.FC = () => {
-  initThree();
+  useEffect(() => {
+    initThree();
+  }, []); // Ensures `initThree` runs only once on component mount
+
   return (
     <>
       <canvas id="three"></canvas>
@@ -19,27 +23,29 @@ const App: React.FC = () => {
 };
 
 const initThree = () => {
-  useEffect(() => {
-    const three = new Three("three");
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(
-      "/src/assets/noiseTexture.png",
-      (texture: THREE.Texture) => {
-        const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
-        const quaternion = new THREE.Quaternion();
-        quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-        terrain.setRotationFromQuaternion(quaternion);
-        terrain.scale.multiplyScalar(10);
-        three.scene.add(terrain);
-      }
-    );
-    three.camera.position.x = 100;
-    three.camera.position.y = 23;
-    three.camera.position.z = 107;
-    three.animate(() => {
-      three.camera.position.x -= 0.02;
-      // console.log(three.camera.position);
-    });
-  }, []);
+  const three = new Three("three");
+
+  const textureLoader = new THREE.TextureLoader();
+  textureLoader.load(
+    "/src/assets/noiseTexture.png",
+    (texture: THREE.Texture) => {
+      const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
+      const quaternion = new THREE.Quaternion();
+      quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+      terrain.setRotationFromQuaternion(quaternion);
+      terrain.scale.multiplyScalar(10);
+      three.scene.add(terrain);
+
+      const stars = generateStarsMesh(10000);
+      three.scene.add(stars);
+    }
+  );
+
+  // Initialize camera and start animation loop
+  three.camera.position.set(100, 23, 107); // Ensure camera is positioned properly
+  three.animate(() => {
+    // Potentially control or update camera here if needed
+  });
 };
+
 export default App;

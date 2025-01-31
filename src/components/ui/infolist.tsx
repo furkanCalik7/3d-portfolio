@@ -1,5 +1,4 @@
 import {
-  Box,
   Heading,
   Span,
   Text,
@@ -26,6 +25,7 @@ export default function HeroSection() {
           backdropFilter="blur(10px)"
           boxShadow="lg"
           data-state="open"
+          zIndex={1}
         >
           <Heading as="h1" fontSize={textSize} fontWeight="bold">
             Hi, I'm Furkan 👋
@@ -50,6 +50,7 @@ export default function HeroSection() {
           boxShadow="lg"
           data-state="open"
           maxW="2xl"
+          zIndex={1}
         >
           <Text fontSize={subTextSize}>
             🚀 Always eager to learn and take on new challenges, I’m currently
@@ -83,6 +84,7 @@ export default function HeroSection() {
           backdropFilter="blur(10px)"
           boxShadow="lg"
           maxW="2xl"
+          zIndex={1}
         >
           <Text fontSize={subTextSize} textAlign="left">
             <Span fontWeight="bold">1999</Span> &nbsp;&nbsp;Born in Turkey.

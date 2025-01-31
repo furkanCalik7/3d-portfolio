@@ -4,11 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
-}
-
-#overley {
-  z-index: 1;
+  z-index: 0; /* Set canvas behind UI elements */
 }
 
 @keyframes fade-in {

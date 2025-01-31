@@ -10,7 +10,7 @@ export default class Three {
   private _camera: THREE.PerspectiveCamera;
   private _renderer: THREE.WebGLRenderer;
   private _clock: THREE.Clock;
-  private _orbitControls?: OrbitControls;
+  private _orbitControls: OrbitControls; // Add OrbitControls
 
   constructor(canvasId: string) {
     this._fov = 45;
@@ -26,7 +26,7 @@ export default class Three {
       1,
       1000
     );
-    this._camera.position.z = 96;
+    this._camera.position.z = 10;
 
     const canvas = document.getElementById(this._canvasId) as HTMLCanvasElement;
     if (!canvas) {
@@ -39,8 +39,12 @@ export default class Three {
     });
     this._renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(this._renderer.domElement);
+    document.body.appendChild(this._stats.dom);
 
-    // document.body.appendChild(this._stats.dom);
+    // Initialize OrbitControls
+    this._orbitControls = new OrbitControls(this._camera, this._renderer.domElement);
+    this._orbitControls.target.set(0, 0, 0); // Set the target to the scene center
+    this._orbitControls.update(); // Update controls
 
     this.initLights();
     this.initHelpers();
@@ -66,8 +70,9 @@ export default class Three {
 
   public animate(callback: () => void = () => {}): void {
     window.requestAnimationFrame(() => this.animate(callback));
-    this.render();
     this._stats.update();
+    this._orbitControls.update(); // Update OrbitControls in the animation loop
+    this.render();
     callback();
   }
 
@@ -80,11 +85,20 @@ export default class Three {
     this._camera.updateProjectionMatrix();
     this._renderer.setSize(window.innerWidth, window.innerHeight);
   }
+
   get scene(): THREE.Scene {
     return this._scene;
   }
 
   get camera(): THREE.Camera {
     return this._camera;
+  }
+
+  get renderer(): THREE.WebGLRenderer {
+    return this._renderer;
+  }
+
+  get orbitControls(): OrbitControls {
+    return this._orbitControls;
   }
 }
