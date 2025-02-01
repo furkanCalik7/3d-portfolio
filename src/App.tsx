@@ -8,6 +8,7 @@ import HomePage from "./pages/home";
 import generateStarParticles from "./three/Stars";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProjectsPage from "./pages/projects";
+import ContactPage from "./pages/contact";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -21,6 +22,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage></HomePage>} />
         <Route path="/projects" element={<ProjectsPage></ProjectsPage>} />
+        <Route path="/contact" element={<ContactPage></ContactPage>} />
       </Routes>
     </Router>
   );

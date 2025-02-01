@@ -42,7 +42,7 @@ const ProjectsPage = () => {
             flex="1"
             zIndex="1"
             alt="sandrix image"
-            maxW={{ base: "100%", md: "40%" }}
+            maxW={{ base: "70%", md: "40%" }}
             height={{ base: "auto", md: "450px" }}
             src={imageSrc}
             objectFit="contain"
@@ -102,8 +102,8 @@ const ProjectsPage = () => {
             flex="1"
             zIndex="1"
             alt="pickup lines image"
-            maxW={{ base: "100%", md: "40%" }}
-            height={{ base: "auto", md: "450px" }}
+            maxW={{ base: "70%", md: "40%" }}
+            height={{ base: "base", md: "450px" }}
             src={pickupLines}
             objectFit="contain"
           />
