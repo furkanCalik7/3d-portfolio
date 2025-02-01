@@ -11,7 +11,6 @@ import InfoCard from "../components/ui/card";
 export default function HomePage() {
   const textSize = useBreakpointValue({ base: "3xl", md: "4xl", lg: "6xl" });
   const subTextSize = useBreakpointValue({ base: "md", md: "lg", lg: "xl" });
-  const alignment = "center";
 
   return (
     <>

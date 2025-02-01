@@ -9,7 +9,6 @@ interface Props {
 
 const Links = [
   { name: "Home", path: "/" },
-  { name: "Works", path: "/works" },
   { name: "Projects", path: "/projects" },
   { name: "Contact", path: "/contact" },
 ];

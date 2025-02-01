@@ -7,7 +7,7 @@ import Navbar from "./components/ui/navbar";
 import HomePage from "./pages/home";
 import generateStarParticles from "./three/Stars";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import WorkPage from "./pages/works";
+import ProjectsPage from "./pages/projects";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -20,7 +20,7 @@ const App: React.FC = () => {
       <Navbar>{/* <InfoList></InfoList> */}</Navbar>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>} />
-        <Route path="/works" element={<WorkPage></WorkPage>} />
+        <Route path="/projects" element={<ProjectsPage></ProjectsPage>} />
       </Routes>
     </Router>
   );
@@ -30,20 +30,17 @@ const initThree = () => {
   const three = new Three("three");
 
   const textureLoader = new THREE.TextureLoader();
-  textureLoader.load(
-    "/src/assets/noiseTexture.png",
-    (texture: THREE.Texture) => {
-      const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
-      const quaternion = new THREE.Quaternion();
-      quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-      terrain.setRotationFromQuaternion(quaternion);
-      terrain.scale.multiplyScalar(10);
-      three.scene.add(terrain);
+  textureLoader.load("/noiseTexture.png", (texture: THREE.Texture) => {
+    const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
+    const quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+    terrain.setRotationFromQuaternion(quaternion);
+    terrain.scale.multiplyScalar(10);
+    three.scene.add(terrain);
 
-      const stars = generateStarParticles(10000);
-      three.scene.add(stars);
-    }
-  );
+    const stars = generateStarParticles(10000);
+    three.scene.add(stars);
+  });
 
   three.camera.position.set(100, 50, 107);
   three.animate(() => {});
