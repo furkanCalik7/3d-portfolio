@@ -18,7 +18,7 @@ interface Props {
 }
 
 const Links = [
-  { name: "Home", path: "/" },
+  { name: "Furkan Çalık", path: "/" },
   { name: "Projects", path: "/projects" },
   { name: "Contact", path: "/contact" },
 ];
@@ -88,8 +88,10 @@ const Navbar = (props: Props) => {
                   key={link.name}
                   bg="black"
                   color="white"
-                  _hover={{ bg: "gray.700" }}
+                  _hover={{ bg: "gray.800", borderColor: "white" }}
                   onClick={() => navigate(link.path)}
+                  variant="ghost"
+                  onMouseDown={(e) => e.preventDefault()} // Prevents focus retention
                 >
                   {link.name}
                 </Button>
@@ -102,9 +104,10 @@ const Navbar = (props: Props) => {
             <IconButton
               bg="black"
               color="white"
-              _hover={{ bg: "gray.700", borderColor: "white" }}
+              _hover={{ bg: "gray.800", borderColor: "white" }}
               onClick={handleGitHubClick}
               aria-label="GitHub"
+              onMouseDown={(e) => e.preventDefault()} // Prevents focus retention
             >
               <FaGithub />
             </IconButton>
@@ -113,10 +116,11 @@ const Navbar = (props: Props) => {
             <IconButton
               bg="black"
               color="white"
-              _hover={{ bg: "gray.700", borderColor: "white" }}
+              _hover={{ bg: "gray.800", borderColor: "white" }}
               variant="ghost"
               onClick={handleLinkedInClick}
               aria-label="LinkedIn"
+              onMouseDown={(e) => e.preventDefault()} // Prevents focus retention
             >
               <FaLinkedin />
             </IconButton>
@@ -132,6 +136,7 @@ const Navbar = (props: Props) => {
               borderStyle="solid"
               borderColor="white"
               aria-label="Download Resume"
+              onMouseDown={(e) => e.preventDefault()} // Prevents focus retention
             >
               Resume
               <MdDownload />
