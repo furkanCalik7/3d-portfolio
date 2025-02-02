@@ -11,6 +11,8 @@ import InfoCard from "../components/ui/card";
 const ProjectsPage = () => {
   const textSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "6xl" });
   const subTextSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
+  console.log("url: " + import.meta.url);
+  console.log(new URL("/google-play-badge.png", import.meta.url));
 
   const imageSrc = useBreakpointValue({
     base: `${import.meta.env.BASE_URL}sandrix/logo-play-store.png`,
@@ -135,7 +137,7 @@ const ProjectsPage = () => {
               alignSelf={{ base: "center", md: "flex-start" }}
             >
               <Image
-                src={`${import.meta.env.BASE_URL}/google-play-badge.png`}
+                src={new URL("/google-play-badge.png", import.meta.url).href}
                 alt="Get it on Google Play"
                 maxW={{ base: "120px", md: "160px" }}
               />
