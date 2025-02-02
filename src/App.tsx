@@ -34,7 +34,7 @@ const initThree = () => {
 
   const textureLoader = new THREE.TextureLoader();
   textureLoader.load(
-    `${import.meta.env.BASE_URL}noiseTexture.png`,
+    new URL("/noiseTexture.png", import.meta.url).href,
     (texture: THREE.Texture) => {
       const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
       const quaternion = new THREE.Quaternion();
