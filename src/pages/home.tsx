@@ -1,5 +1,4 @@
 import {
-  Box,
   Heading,
   Span,
   Text,
@@ -86,7 +85,7 @@ export default function HomePage() {
           zIndex={1}
         >
           <Text fontSize={subTextSize} textAlign="left">
-            <Span fontWeight="bold">1999</Span> &nbsp;&nbsp;Born in Turkey.
+            <Span fontWeight="bold">2000</Span> &nbsp;&nbsp;Born in Turkey.
           </Text>
 
           <Text fontSize={subTextSize} textAlign="left">

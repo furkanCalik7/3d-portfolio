@@ -11,14 +11,13 @@ const InfoCard = (props: Props) => {
     <Box
       height="100vh"
       width="100%"
-      color="white"
       display="flex"
       alignItems="center"
       justifyContent="center"
       textAlign="center"
       position={"relative"}
       px={6}
-      zIndex={"2"}
+      zIndex={2}
     >
       {children}
     </Box>

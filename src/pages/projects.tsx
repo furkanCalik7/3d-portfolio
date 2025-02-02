@@ -70,12 +70,15 @@ const ProjectsPage = () => {
             </Text>
 
             <Link
-              href="https://play.google.com/store/apps/details?id=com.yourcompany.sandrix"
+              // href="https://play.google.com/store/apps/details?id=com.yourcompany.sandrix"
               mt={4}
               alignSelf={{ base: "center", md: "flex-start" }}
             >
               <Image
-                src={new URL("/google-play-badge.png", import.meta.url).href}
+                src={
+                  new URL("/google-play-badge-coming-soon.png", import.meta.url)
+                    .href
+                }
                 alt="Get it on Google Play"
                 maxW={{ base: "120px", md: "160px" }}
               />
@@ -130,7 +133,7 @@ const ProjectsPage = () => {
             </Text>
 
             <Link
-              href="https://play.google.com/store/apps/details?id=com.yourcompany.sandrix"
+              href="https://play.google.com/store/apps/details?id=com.marginals.pickup_lines"
               mt={4}
               alignSelf={{ base: "center", md: "flex-start" }}
             >
