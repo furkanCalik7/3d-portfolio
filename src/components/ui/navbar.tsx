@@ -29,7 +29,7 @@ const Navbar = (props: Props) => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const handleResumeDownload = () => {
-    const resumeUrl = "/cv.pdf";
+    const resumeUrl = `${import.meta.env.BASE_URL}cv.pdf`;
     window.open(resumeUrl, "_blank");
   };
 

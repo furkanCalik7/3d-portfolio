@@ -75,7 +75,7 @@ const ProjectsPage = () => {
               alignSelf={{ base: "center", md: "flex-start" }}
             >
               <Image
-                src="/google-play-badge.png"
+                src={`${import.meta.env.BASE_URL}/google-play-badge.png`}
                 alt="Get it on Google Play"
                 maxW={{ base: "120px", md: "160px" }}
               />
@@ -135,7 +135,7 @@ const ProjectsPage = () => {
               alignSelf={{ base: "center", md: "flex-start" }}
             >
               <Image
-                src="/google-play-badge.png"
+                src={`${import.meta.env.BASE_URL}/google-play-badge.png`}
                 alt="Get it on Google Play"
                 maxW={{ base: "120px", md: "160px" }}
               />

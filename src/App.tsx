@@ -33,17 +33,20 @@ const initThree = () => {
   const three = new Three("three");
 
   const textureLoader = new THREE.TextureLoader();
-  textureLoader.load("/noiseTexture.png", (texture: THREE.Texture) => {
-    const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
-    const quaternion = new THREE.Quaternion();
-    quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
-    terrain.setRotationFromQuaternion(quaternion);
-    terrain.scale.multiplyScalar(10);
-    three.scene.add(terrain);
+  textureLoader.load(
+    `${import.meta.env.BASE_URL}noiseTexture.png`,
+    (texture: THREE.Texture) => {
+      const terrain = generateTerrainMesh(texture, 50, 50, 100, 100, 10);
+      const quaternion = new THREE.Quaternion();
+      quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2);
+      terrain.setRotationFromQuaternion(quaternion);
+      terrain.scale.multiplyScalar(10);
+      three.scene.add(terrain);
 
-    const stars = generateStarParticles(10000);
-    three.scene.add(stars);
-  });
+      const stars = generateStarParticles(10000);
+      three.scene.add(stars);
+    }
+  );
 
   three.camera.position.set(100, 50, 107);
   three.animate(() => {});
