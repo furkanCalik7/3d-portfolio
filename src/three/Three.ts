@@ -39,7 +39,7 @@ export default class Three {
     });
     this._renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(this._renderer.domElement);
-    document.body.appendChild(this._stats.dom);
+    // document.body.appendChild(this._stats.dom);
 
     this.initLights();
     this.initHelpers();

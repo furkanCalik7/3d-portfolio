@@ -18,12 +18,13 @@ const App: React.FC = () => {
   return (
     <Router>
       <canvas id="three"></canvas>
-      <Navbar>{/* <InfoList></InfoList> */}</Navbar>
-      <Routes>
-        <Route path="/" element={<HomePage></HomePage>} />
-        <Route path="/projects" element={<ProjectsPage></ProjectsPage>} />
-        <Route path="/contact" element={<ContactPage></ContactPage>} />
-      </Routes>
+      <Navbar>
+        <Routes>
+          <Route path="/" element={<HomePage></HomePage>} />
+          <Route path="/projects" element={<ProjectsPage></ProjectsPage>} />
+          <Route path="/contact" element={<ContactPage></ContactPage>} />
+        </Routes>
+      </Navbar>
     </Router>
   );
 };

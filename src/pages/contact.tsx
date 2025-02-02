@@ -60,8 +60,6 @@ const ContactPage = () => {
       return;
     }
 
-    console.log(formData);
-
     emailjs
       .send(SERVICE_ID, TEMPLATE_ID, formData)
       .then(() => {
@@ -73,7 +71,7 @@ const ContactPage = () => {
 
         setFormData({ from_name: "", from_mail: "", message: "" });
       })
-      .catch((error) => {
+      .catch(() => {
         toaster.create({
           description: "Message could not be sent. Please try again later.",
           type: "error",
@@ -92,12 +90,12 @@ const ContactPage = () => {
         w={{ base: "100%", md: "800px" }}
         minW="40%"
         mx="auto"
-        my={{ base: 0, md: 6 }}
         p={{ base: 0, md: 10 }}
         borderRadius="lg"
         bg="rgba(0, 0, 0, 0.6)"
         backdropFilter="blur(10px)"
         boxShadow="lg"
+        mt="50px"
         zIndex={1}
         alignItems="center"
         flexDirection="column"

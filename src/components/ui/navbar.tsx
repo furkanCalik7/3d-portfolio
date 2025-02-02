@@ -1,9 +1,17 @@
 "use client";
 
-import { Box, Button, Flex, HStack, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  IconButton,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa"; // Icons for GitHub, LinkedIn, and Resume
-import { MdDownload } from "react-icons/md";
+import { MdDownload, MdMenu } from "react-icons/md"; // Icons for menu and close
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./menu";
 
 interface Props {
   children?: React.ReactNode;
@@ -18,6 +26,7 @@ const Links = [
 const Navbar = (props: Props) => {
   const navigate = useNavigate();
   const { children } = props;
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   const handleResumeDownload = () => {
     const resumeUrl = "/cv.pdf";
@@ -32,6 +41,10 @@ const Navbar = (props: Props) => {
     window.open("https://www.linkedin.com/in/furkancalik/", "_blank");
   };
 
+  function HandleMenuOnSelect(details: any): void {
+    navigate(details.value);
+  }
+
   return (
     <>
       <Box
@@ -41,11 +54,35 @@ const Navbar = (props: Props) => {
         top={0}
         left={0}
         right={0}
-        zIndex={1}
+        zIndex={5}
       >
         <Flex h={16} alignItems="center" justifyContent="space-between">
-          <HStack gap={8} alignItems="center">
-            <HStack as="nav" gap={4} display={{ base: "none", md: "flex" }}>
+          {isMobile && (
+            <MenuRoot onSelect={HandleMenuOnSelect}>
+              <MenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  _hover={{ borderColor: "white" }}
+                  size="sm"
+                  bg="black"
+                >
+                  <MdMenu></MdMenu>
+                </Button>
+              </MenuTrigger>
+              <MenuContent zIndex="4">
+                <MenuItem value=" ">Home</MenuItem>
+                <MenuItem value="projects">Projects</MenuItem>
+                <MenuItem value="contact">Contact</MenuItem>
+              </MenuContent>
+            </MenuRoot>
+          )}
+
+          <HStack
+            gap={8}
+            alignItems="center"
+            display={{ base: "none", md: "flex" }}
+          >
+            <HStack as="nav" gap={4}>
               {Links.map((link) => (
                 <Button
                   key={link.name}
@@ -59,32 +96,32 @@ const Navbar = (props: Props) => {
               ))}
             </HStack>
           </HStack>
-
           {/* Right Side: Resume, GitHub, LinkedIn Buttons */}
           <HStack gap={4}>
-            {/* Resume Download Button */}
             {/* GitHub Button */}
             <IconButton
               bg="black"
               color="white"
               _hover={{ bg: "gray.700", borderColor: "white" }}
               onClick={handleGitHubClick}
+              aria-label="GitHub"
             >
               <FaGithub />
             </IconButton>
 
             {/* LinkedIn Button */}
-
             <IconButton
               bg="black"
               color="white"
               _hover={{ bg: "gray.700", borderColor: "white" }}
-              // borderColor="white"
               variant="ghost"
               onClick={handleLinkedInClick}
+              aria-label="LinkedIn"
             >
               <FaLinkedin />
             </IconButton>
+
+            {/* Resume Download Button */}
             <IconButton
               bg="black"
               color="white"
@@ -94,9 +131,10 @@ const Navbar = (props: Props) => {
               variant="outline"
               borderStyle="solid"
               borderColor="white"
+              aria-label="Download Resume"
             >
               Resume
-              <MdDownload></MdDownload>
+              <MdDownload />
             </IconButton>
           </HStack>
         </Flex>
