@@ -1,18 +1,19 @@
 import {
+  Box,
   Heading,
   Span,
   Text,
   VStack,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import InfoCard from "../components/ui/card";
+import InfoCard from "../components/ui/info-card";
 
 export default function HomePage() {
   const textSize = useBreakpointValue({ base: "3xl", md: "4xl", lg: "6xl" });
   const subTextSize = useBreakpointValue({ base: "md", md: "lg", lg: "xl" });
 
   return (
-    <>
+    <div>
       <InfoCard>
         <VStack
           gap={6}
@@ -110,6 +111,6 @@ export default function HomePage() {
           </Text>
         </VStack>
       </InfoCard>
-    </>
+    </div>
   );
 }

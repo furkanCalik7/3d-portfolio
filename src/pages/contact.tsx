@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Field } from "../components/ui/field"; // Ensure this path is correct
 import { MdEmail, MdLocationOn } from "react-icons/md";
-import InfoCard from "../components/ui/card";
+import InfoCard from "../components/ui/info-card";
 import { Toaster, toaster } from "../components/ui/toaster";
 
 const PUBLIC_KEY = "XkJZnCjWG2trKuFpw";

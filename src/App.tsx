@@ -10,6 +10,8 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProjectsPage from "./pages/projects";
 import ContactPage from "./pages/contact";
 
+const STAR_COUNT = 10000;
+
 const App: React.FC = () => {
   useEffect(() => {
     initThree();
@@ -43,7 +45,7 @@ const initThree = () => {
       terrain.scale.multiplyScalar(10);
       three.scene.add(terrain);
 
-      const stars = generateStarParticles(10000);
+      const stars = generateStarParticles(STAR_COUNT, three.camera);
       three.scene.add(stars);
     }
   );

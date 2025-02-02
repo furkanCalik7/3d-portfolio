@@ -6,7 +6,7 @@ import {
   useBreakpointValue,
   Link,
 } from "@chakra-ui/react";
-import InfoCard from "../components/ui/card";
+import InfoCard from "../components/ui/info-card";
 
 const ProjectsPage = () => {
   const textSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "6xl" });
