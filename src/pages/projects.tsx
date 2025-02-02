@@ -11,13 +11,15 @@ import InfoCard from "../components/ui/card";
 const ProjectsPage = () => {
   const textSize = useBreakpointValue({ base: "2xl", md: "4xl", lg: "6xl" });
   const subTextSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
+
   const imageSrc = useBreakpointValue({
-    base: "/sandrix/logo-play-store.png",
-    md: "/sandrix/sandrix-portrait.png",
+    base: `${import.meta.env.BASE_URL}sandrix/logo-play-store.png`,
+    md: `${import.meta.env.BASE_URL}sandrix/sandrix-portrait.png`,
   });
+
   const pickupLines = useBreakpointValue({
-    base: "/pickup-lines/logo-play-store.png",
-    md: "/pickup-lines/pickup-portrait.png",
+    base: `${import.meta.env.BASE_URL}pickup-lines/logo-play-store.png`,
+    md: `${import.meta.env.BASE_URL}pickup-lines/pickup-portrait.png`,
   });
 
   return (
