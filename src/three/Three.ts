@@ -9,7 +9,6 @@ export default class Three {
   private _stats: Stats;
   private _camera: THREE.PerspectiveCamera;
   private _renderer: THREE.WebGLRenderer;
-  private _clock: THREE.Clock;
   private _orbitControls?: OrbitControls; // Add OrbitControls
 
   constructor(canvasId: string) {
@@ -18,7 +17,6 @@ export default class Three {
 
     this._scene = new THREE.Scene();
     this._stats = new Stats();
-    this._clock = new THREE.Clock();
 
     this._camera = new THREE.PerspectiveCamera(
       this._fov,
