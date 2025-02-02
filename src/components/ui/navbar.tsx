@@ -18,7 +18,7 @@ interface Props {
 }
 
 const Links = [
-  { name: "Furkan Çalık", path: "/" },
+  { name: "Home", path: "/" },
   { name: "Projects", path: "/projects" },
   { name: "Contact", path: "/contact" },
 ];
