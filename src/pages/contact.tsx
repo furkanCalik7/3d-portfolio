@@ -11,13 +11,10 @@ import {
   Text,
   Input,
 } from "@chakra-ui/react";
+import { Field } from "../components/ui/field"; // Ensure this path is correct
 import { MdEmail, MdLocationOn } from "react-icons/md";
 import InfoCard from "../components/ui/card";
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-} from "@chakra-ui/form-control";
+import { Toaster, toaster } from "../components/ui/toaster";
 
 const PUBLIC_KEY = "XkJZnCjWG2trKuFpw";
 const SERVICE_ID = "service_p7laon5";
@@ -33,60 +30,67 @@ const ContactPage = () => {
   });
 
   const [errors, setErrors] = useState({
-    from_name: "",
-    from_mail: "",
-    message: "",
+    from_name: false,
+    from_mail: false,
+    message: false,
   });
 
   const [isSending, setIsSending] = useState(false);
 
-  // Handle input changes
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // Clear error when user types
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  // Handle form submission
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsSending(true);
 
     let newErrors = {
-      from_name: formData.from_name ? "" : "Name is required.",
-      from_mail: formData.from_mail ? "" : "Email is required.",
-      message: formData.message ? "" : "Message is required.",
+      from_name: formData.from_name == "",
+      from_mail: formData.from_mail == "",
+      message: formData.message == "",
     };
 
     setErrors(newErrors);
 
-    // Stop if there are errors
-    if (Object.values(newErrors).some((error) => error !== "")) {
+    if (Object.values(newErrors).some((error) => error)) {
       setIsSending(false);
       return;
     }
 
     console.log(formData);
 
-    // emailjs.send(SERVICE_ID, TEMPLATE_ID, formData).then(
-    //   () => {
-    //     console.log("SUCCESS!");
-    //     setFormData({ from_name: "", from_mail: "", message: "" });
-    //     setIsSending(false);
-    //   },
-    //   (error) => {
-    //     console.log("FAILED...", error.text);
-    //     setIsSending(false);
-    //   }
-    // );
+    emailjs
+      .send(SERVICE_ID, TEMPLATE_ID, formData)
+      .then(() => {
+        toaster.create({
+          description: "Message sent.",
+          type: "success",
+          duration: 5000,
+        });
+
+        setFormData({ from_name: "", from_mail: "", message: "" });
+      })
+      .catch((error) => {
+        toaster.create({
+          description: "Message could not be sent. Please try again later.",
+          type: "error",
+          duration: 5000,
+        });
+      })
+      .finally(() => {
+        setIsSending(false);
+      });
   };
 
   return (
     <InfoCard>
       <Flex
         maxW="100%"
-        w="100%"
+        w={{ base: "100%", md: "800px" }}
+        minW="40%"
         mx="auto"
         my={{ base: 0, md: 6 }}
         p={{ base: 0, md: 10 }}
@@ -98,7 +102,6 @@ const ContactPage = () => {
         alignItems="center"
         flexDirection="column"
         gap={{ base: 4, md: 8 }}
-        mr="8"
       >
         {/* Contact Information Section */}
         <Flex w="100%" direction="column" textAlign="center">
@@ -133,8 +136,13 @@ const ContactPage = () => {
         >
           <form onSubmit={handleSubmit}>
             <VStack w="100%">
-              <FormControl isInvalid={!!errors.from_name} isRequired w="100%">
-                <FormLabel mb="4px">Your Name</FormLabel>
+              {/* Your Name Field */}
+              <Field
+                invalid={!!errors.from_name}
+                required
+                label="Your Name"
+                errorText="Field is required"
+              >
                 <Input
                   type="text"
                   name="from_name"
@@ -143,13 +151,15 @@ const ContactPage = () => {
                   value={formData.from_name}
                   onChange={handleChange}
                 />
-                <FormErrorMessage mt="4px" color="red">
-                  {errors.from_name}
-                </FormErrorMessage>
-              </FormControl>
+              </Field>
 
-              <FormControl isInvalid={!!errors.from_mail} isRequired w="100%">
-                <FormLabel mb="4px">Email</FormLabel>
+              {/* Email Field */}
+              <Field
+                invalid={!!errors.from_mail}
+                required
+                label="Email"
+                errorText="Field is required"
+              >
                 <Input
                   type="email"
                   name="from_mail"
@@ -158,26 +168,25 @@ const ContactPage = () => {
                   value={formData.from_mail}
                   onChange={handleChange}
                 />
-                <FormErrorMessage mt="4px" color="red">
-                  {errors.from_mail}
-                </FormErrorMessage>
-              </FormControl>
+              </Field>
 
-              <FormControl isInvalid={!!errors.message} isRequired w="100%">
-                <FormLabel mb="4px">Message</FormLabel>
+              {/* Message Field */}
+              <Field
+                invalid={!!errors.message}
+                required
+                label="Message"
+                errorText="Field is required"
+              >
                 <Textarea
                   name="message"
                   placeholder="Write your message here..."
                   borderColor="gray.300"
-                  size="md"
                   minH="150px"
+                  resize="none"
                   value={formData.message}
                   onChange={handleChange}
                 />
-                <FormErrorMessage mt="4px" color="red">
-                  {errors.message}
-                </FormErrorMessage>
-              </FormControl>
+              </Field>
 
               <Button
                 type="submit"
@@ -186,7 +195,8 @@ const ContactPage = () => {
                 color="white"
                 borderColor="white"
                 _hover={{ bg: "white", borderColor: "white", color: "black" }}
-                // isLoading={isSending}
+                loading={isSending}
+                loadingText="Sending..."
               >
                 Send Message
               </Button>
@@ -194,6 +204,7 @@ const ContactPage = () => {
           </form>
         </Box>
       </Flex>
+      <Toaster />
     </InfoCard>
   );
 };
