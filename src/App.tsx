@@ -9,6 +9,7 @@ import generateStarParticles from "./three/Stars";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProjectsPage from "./pages/projects";
 import ContactPage from "./pages/contact";
+import ScrollAnimation from "./three/ScrollAnimation";
 
 const STAR_COUNT = 10000;
 
@@ -32,9 +33,10 @@ const App: React.FC = () => {
 };
 
 const initThree = () => {
-  const three = new Three("three");
-
+  const three = new Three("three", true);
+  const scrollAnimation = new ScrollAnimation(three);
   const textureLoader = new THREE.TextureLoader();
+
   textureLoader.load(
     new URL("/noiseTexture.png", import.meta.url).href,
     (texture: THREE.Texture) => {
@@ -51,7 +53,9 @@ const initThree = () => {
   );
 
   three.camera.position.set(100, 50, 107);
-  three.animate(() => {});
+  three.animate(() => {
+    scrollAnimation.animate();
+  });
 };
 
 export default App;
