@@ -23,7 +23,7 @@ export class ThreeDebugger {
   private _transformControl: TransformControls;
   private _debugOrbitControls: OrbitControls;
 
-  constructor(three: Three) {
+  constructor(three: Three, gui: GUI) {
     this._three = three;
     this._renderer = three.renderer;
     this._stats = new Stats();
@@ -31,7 +31,7 @@ export class ThreeDebugger {
     this._raycaster = new THREE.Raycaster();
     this._mouse = new THREE.Vector2();
     this._mainCamera = three.camera;
-    this._gui = new GUI();
+    this._gui = gui;
     this._cameraHelper = new THREE.CameraHelper(this._mainCamera);
     this._debugCamera = new THREE.PerspectiveCamera(45, 1, 1, 3000);
     this._transformControl = new TransformControls(

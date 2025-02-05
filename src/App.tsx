@@ -4,15 +4,17 @@ import "./App.css";
 import Three from "./three/Three";
 import generateTerrainMesh from "./three/Terrain";
 import Navbar from "./components/ui/navbar";
-import HomePage from "./pages/home";
 import generateStarParticles from "./three/Stars";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProjectsPage from "./pages/projects";
 import ContactPage from "./pages/contact";
 import ScrollAnimation from "./three/ScrollAnimation";
 import Curve from "./three/Curve";
+import GUI from "lil-gui";
+import { ThreeDebugger } from "./three/ThreeDebugger";
 
 const STAR_COUNT = 10000;
+const THREE_CANVAS_REF_NAME = "three";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -21,7 +23,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <canvas id="three"></canvas>
+      <canvas id={THREE_CANVAS_REF_NAME}></canvas>
       <Navbar>
         <Routes>
           <Route path="/" />
@@ -34,7 +36,15 @@ const App: React.FC = () => {
 };
 
 const initThree = () => {
-  const three = new Three("three", !import.meta.env.PROD);
+  const three = new Three(THREE_CANVAS_REF_NAME);
+  let threeDebugger: ThreeDebugger | undefined;
+  let gui: GUI | undefined;
+
+  if (!import.meta.env.PROD) {
+    gui = new GUI();
+    threeDebugger = new ThreeDebugger(three, gui);
+  }
+
   const scrollAnimation = new ScrollAnimation(three);
 
   // loadTerrain(three);
@@ -46,6 +56,7 @@ const initThree = () => {
     scrollAnimation.animate();
     if (!import.meta.env.PROD) {
       curve.updateSpline();
+      threeDebugger?.update();
     }
   });
 };

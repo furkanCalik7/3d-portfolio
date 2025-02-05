@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { ThreeDebugger } from "./ThreeDebugger";
 
 export default class Three {
   SCREEN_HEIGHT: number = window.innerHeight;
@@ -12,9 +11,8 @@ export default class Three {
   private _activeCamera: THREE.PerspectiveCamera;
   private _orbitControls?: OrbitControls;
   private _renderer: THREE.WebGLRenderer;
-  private _debugger?: ThreeDebugger;
 
-  constructor(canvasId: string, debugMode: boolean = false) {
+  constructor(canvasId: string) {
     this._canvasId = canvasId;
     this._scene = new THREE.Scene();
     this._mainCamera = new THREE.PerspectiveCamera(
@@ -39,10 +37,6 @@ export default class Three {
     this.initLights();
     this.initOrbitControls();
 
-    if (debugMode) {
-      this._debugger = new ThreeDebugger(this);
-    }
-
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
   }
 
@@ -50,12 +44,17 @@ export default class Three {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     this._scene.add(ambientLight);
 
-    const spotLight = new THREE.SpotLight(0x413123, 1);
-    spotLight.position.set(0, 100, 100);
-    this._scene.add(spotLight);
-
-    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-    this._scene.add(spotLightHelper);
+    const light = new THREE.SpotLight(0xffffff, 1);
+    light.position.set(0, 1500, 200);
+    light.angle = Math.PI * 0.2;
+    light.decay = 0;
+    light.castShadow = true;
+    light.shadow.camera.near = 200;
+    light.shadow.camera.far = 2000;
+    light.shadow.bias = -0.000222;
+    light.shadow.mapSize.width = 1024;
+    light.shadow.mapSize.height = 1024;
+    this._scene.add(light);
   }
 
   private initOrbitControls(): void {
@@ -72,7 +71,6 @@ export default class Three {
 
   public animate(callback: () => void = () => {}): void {
     window.requestAnimationFrame(() => this.animate(callback));
-    this._debugger?.update();
     this._orbitControls?.update();
     this.render();
     callback();

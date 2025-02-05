@@ -1,12 +1,15 @@
 import * as THREE from "three";
 import Three from "./Three";
 
+const HANDLER_COLOR: THREE.ColorRepresentation = THREE.Color.NAMES.violet;
+
+// need a curve debugger
 export default class Curve {
   private _three: Three;
   private _curveHandlers: THREE.Mesh[];
   private _points: THREE.Vector3[];
   private _curveHandlerGeometry: THREE.BoxGeometry;
-  private _curveHandlerMaterial: THREE.MeshBasicMaterial;
+  private _curveHandlerMaterial: THREE.MeshStandardMaterial;
   private _curve: THREE.CatmullRomCurve3;
   private _line: THREE.Line;
 
@@ -14,8 +17,8 @@ export default class Curve {
     this._three = three;
     this._curveHandlers = [];
     this._curveHandlerGeometry = new THREE.BoxGeometry(5, 5, 5);
-    this._curveHandlerMaterial = new THREE.MeshBasicMaterial({
-      color: 0xa231a1,
+    this._curveHandlerMaterial = new THREE.MeshStandardMaterial({
+      color: HANDLER_COLOR,
     });
 
     this._points = initialPoints;
@@ -38,10 +41,14 @@ export default class Curve {
   }
 
   private createHandlerMesh(): THREE.Mesh {
-    return new THREE.Mesh(
+    const mesh = new THREE.Mesh(
       this._curveHandlerGeometry,
       this._curveHandlerMaterial
     );
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    return mesh;
   }
 
   addPoint(point: THREE.Vector3) {
