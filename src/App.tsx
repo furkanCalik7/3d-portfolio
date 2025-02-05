@@ -39,11 +39,12 @@ const initThree = () => {
 
   // loadTerrain(three);
   // laodStarParticles(three);
-  loadCurve(three);
+  const curve = loadCurve(three);
 
   three.camera.position.set(100, 50, 107);
   three.animate(() => {
     scrollAnimation.animate();
+    curve.updateSpline();
   });
 };
 
@@ -68,8 +69,8 @@ const laodStarParticles = (three: Three) => {
   three.scene.add(stars);
 };
 
-const loadCurve = (three: Three) => {
-  const curve = new Curve(three, [
+const loadCurve = (three: Three): Curve => {
+  return new Curve(three, [
     new THREE.Vector3(20, 20, 20),
     new THREE.Vector3(20, 5, 10),
     new THREE.Vector3(20, 0, -10),

@@ -55,15 +55,15 @@ export default class Three {
   }
 
   private initOrbitControls(): void {
-    // this._orbitControls = new OrbitControls(
-    //   this._mainCamera,
-    //   this._renderer.domElement
-    // );
-    // this._orbitControls.target.set(0, 50, 0);
-    // this._orbitControls.autoRotateSpeed = 0.5;
-    // this._orbitControls.autoRotate = true;
-    // this._orbitControls.enabled = false;
-    // this._orbitControls.update();
+    this._orbitControls = new OrbitControls(
+      this._mainCamera,
+      this._renderer.domElement
+    );
+    this._orbitControls.target.set(0, 50, 0);
+    this._orbitControls.autoRotateSpeed = 0.5;
+    this._orbitControls.autoRotate = true;
+    this._orbitControls.enabled = false;
+    this._orbitControls.update();
   }
 
   public animate(callback: () => void = () => {}): void {

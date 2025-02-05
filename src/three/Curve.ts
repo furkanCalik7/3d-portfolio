@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import Three from "./Three";
+import _ from "lodash";
 
 export default class Curve {
   private _three: Three;
@@ -60,5 +61,18 @@ export default class Curve {
 
     this._line.geometry.setFromPoints(interpolations);
     this._line.geometry.attributes.position.needsUpdate = true;
+  }
+
+  updateSpline() {
+    const positions = this._curveHandlers.map((handler) => handler.position);
+    const hasChanged = !this._points.every(
+      (point, index) => point.equals(positions[index]) // Use .equals() for vector comparison
+    );
+
+    if (hasChanged) {
+      this._points = positions.map((p) => p.clone()); // Clone to avoid reference issues
+      this.refresh();
+      console.log("Spline updated");
+    }
   }
 }
