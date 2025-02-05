@@ -44,7 +44,9 @@ const initThree = () => {
   three.camera.position.set(100, 50, 107);
   three.animate(() => {
     scrollAnimation.animate();
-    curve.updateSpline();
+    if (!import.meta.env.PROD) {
+      curve.updateSpline();
+    }
   });
 };
 

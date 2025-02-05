@@ -10,8 +10,8 @@ export default class Three {
   private _scene: THREE.Scene;
   private _mainCamera: THREE.PerspectiveCamera;
   private _activeCamera: THREE.PerspectiveCamera;
-  private _renderer: THREE.WebGLRenderer;
   private _orbitControls?: OrbitControls;
+  private _renderer: THREE.WebGLRenderer;
   private _debugger?: ThreeDebugger;
 
   constructor(canvasId: string, debugMode: boolean = false) {
@@ -33,6 +33,7 @@ export default class Three {
 
     this._renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     this._renderer.setSize(window.innerWidth, window.innerHeight);
+    this._renderer.shadowMap.enabled = true;
     document.body.appendChild(this._renderer.domElement);
 
     this.initLights();
@@ -49,9 +50,12 @@ export default class Three {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     this._scene.add(ambientLight);
 
-    const spotLight = new THREE.SpotLight(0xffffff, 1);
-    spotLight.position.set(0, 64, 32);
+    const spotLight = new THREE.SpotLight(0x413123, 1);
+    spotLight.position.set(0, 100, 100);
     this._scene.add(spotLight);
+
+    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+    this._scene.add(spotLightHelper);
   }
 
   private initOrbitControls(): void {

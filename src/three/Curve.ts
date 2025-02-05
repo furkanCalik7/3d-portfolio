@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import Three from "./Three";
-import _ from "lodash";
 
 export default class Curve {
   private _three: Three;
@@ -15,7 +14,9 @@ export default class Curve {
     this._three = three;
     this._curveHandlers = [];
     this._curveHandlerGeometry = new THREE.BoxGeometry(5, 5, 5);
-    this._curveHandlerMaterial = new THREE.MeshBasicMaterial();
+    this._curveHandlerMaterial = new THREE.MeshBasicMaterial({
+      color: 0xa231a1,
+    });
 
     this._points = initialPoints;
 
@@ -72,7 +73,6 @@ export default class Curve {
     if (hasChanged) {
       this._points = positions.map((p) => p.clone()); // Clone to avoid reference issues
       this.refresh();
-      console.log("Spline updated");
     }
   }
 }
