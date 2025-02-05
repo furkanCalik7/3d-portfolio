@@ -24,7 +24,7 @@ const App: React.FC = () => {
       <canvas id="three"></canvas>
       <Navbar>
         <Routes>
-          <Route path="/" element={<HomePage></HomePage>} />
+          <Route path="/" />
           <Route path="/projects" element={<ProjectsPage></ProjectsPage>} />
           <Route path="/contact" element={<ContactPage></ContactPage>} />
         </Routes>

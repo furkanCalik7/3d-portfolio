@@ -23,8 +23,7 @@ export default class Three {
       1,
       1000
     );
-    this._mainCamera.position.set(100, 50, 107);
-    this._mainCamera.lookAt(0, 50, 0);
+    this._mainCamera.lookAt(0, 0, 0);
     this._activeCamera = this._mainCamera;
 
     const canvas = document.getElementById(this._canvasId) as HTMLCanvasElement;
@@ -40,7 +39,7 @@ export default class Three {
     this.initOrbitControls();
 
     if (debugMode) {
-      this._debugger = new ThreeDebugger(this, this._renderer);
+      this._debugger = new ThreeDebugger(this);
     }
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
@@ -75,7 +74,7 @@ export default class Three {
     callback();
   }
 
-  private render(): void {
+  render(): void {
     this._renderer.render(this._scene, this._activeCamera);
   }
 

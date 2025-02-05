@@ -1,8 +1,11 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { TransformControls } from "three/examples/jsm/controls/TransformControls.js";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import GUI from "lil-gui";
 import Three from "./Three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+
+type Action = "ACTION_SELECT" | "ACTION_NONE";
 
 export class ThreeDebugger {
   private _three: Three;
@@ -11,14 +14,23 @@ export class ThreeDebugger {
   private _gui: GUI;
   private _cameraHelper: THREE.CameraHelper;
   private _debugCamera: THREE.PerspectiveCamera;
-  private _debugOrbitControls: OrbitControls;
+  private _currentAction: Action;
+  private _mouse: THREE.Vector2;
+  private _raycaster: THREE.Raycaster;
+
   private _helpers: THREE.Object3D[] = [];
   private _mainCamera: THREE.PerspectiveCamera;
+  private _tranformControl: TransformControls;
+  private _debugOrbitControls: OrbitControls;
 
-  constructor(three: Three, renderer: THREE.WebGLRenderer) {
+  constructor(three: Three) {
     this._three = three;
-    this._renderer = renderer;
+    this._renderer = three.renderer;
     this._stats = new Stats();
+    this._currentAction = "ACTION_NONE";
+    this._raycaster = new THREE.Raycaster();
+    this._mouse = new THREE.Vector2();
+
     document.body.appendChild(this._stats.dom);
 
     this._gui = new GUI();
@@ -34,6 +46,21 @@ export class ThreeDebugger {
 
     this._cameraHelper = new THREE.CameraHelper(this._three.camera);
     this._three.scene.add(this._cameraHelper);
+
+    this._tranformControl = new TransformControls(
+      this._debugCamera,
+      this._renderer.domElement
+    );
+
+    this._tranformControl.addEventListener("dragging-changed", (event: any) => {
+      this._debugOrbitControls.enabled = !event.value;
+    });
+
+    this._three.renderer.domElement.addEventListener(
+      "pointerdown",
+      this.HandleMouseDown.bind(this)
+    );
+
     this.initGUI();
     this.initHelpers();
     window.addEventListener("keydown", this.handleKeyboard.bind(this), false);
@@ -86,16 +113,33 @@ export class ThreeDebugger {
 
   public update(): void {
     this._stats.update();
-    this._debugOrbitControls.update();
+    this._debugOrbitControls?.update();
+
+    if (this._currentAction == "ACTION_SELECT") {
+      this._raycaster.setFromCamera(this._mouse, this._debugCamera);
+      this._currentAction = "ACTION_NONE";
+      const intersects = this._raycaster.intersectObjects(
+        this._three.scene.children,
+        false
+      );
+      if (intersects.length > 0) {
+        this._tranformControl.attach(intersects[0].object);
+        this._three.scene.add(this._tranformControl.getHelper());
+      }
+    }
+  }
+
+  private HandleMouseDown(event: PointerEvent) {
+    this._currentAction = "ACTION_SELECT";
+    this._mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this._mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 
   private switchCamera() {
     if (this._three.activeCamera == this._mainCamera) {
       this._three.activeCamera = this._debugCamera;
-      this._debugOrbitControls.enabled = true;
     } else {
       this._three.activeCamera = this._mainCamera;
-      this._debugOrbitControls.enabled = false;
     }
   }
 }
