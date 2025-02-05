@@ -20,10 +20,11 @@ export class ThreeDebugger {
     this._renderer = renderer;
     this._stats = new Stats();
     document.body.appendChild(this._stats.dom);
+
     this._gui = new GUI();
     this._mainCamera = three.camera;
 
-    this._debugCamera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
+    this._debugCamera = new THREE.PerspectiveCamera(45, 1, 1, 3000);
     this._debugCamera.position.set(300, 300, 300);
     this._debugCamera.lookAt(new THREE.Vector3(0, 0, 0));
     this._debugOrbitControls = new OrbitControls(
@@ -89,11 +90,11 @@ export class ThreeDebugger {
   }
 
   private switchCamera() {
-    if (this._three.camera == this._mainCamera) {
-      this._three.camera = this._debugCamera;
+    if (this._three.activeCamera == this._mainCamera) {
+      this._three.activeCamera = this._debugCamera;
       this._debugOrbitControls.enabled = true;
     } else {
-      this._three.camera = this._mainCamera;
+      this._three.activeCamera = this._mainCamera;
       this._debugOrbitControls.enabled = false;
     }
   }

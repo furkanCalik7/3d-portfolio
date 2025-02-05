@@ -8,7 +8,8 @@ export default class Three {
 
   private _canvasId: string;
   private _scene: THREE.Scene;
-  private _camera: THREE.PerspectiveCamera;
+  private _mainCamera: THREE.PerspectiveCamera;
+  private _activeCamera: THREE.PerspectiveCamera;
   private _renderer: THREE.WebGLRenderer;
   private _orbitControls?: OrbitControls;
   private _debugger?: ThreeDebugger;
@@ -16,13 +17,15 @@ export default class Three {
   constructor(canvasId: string, debugMode: boolean = false) {
     this._canvasId = canvasId;
     this._scene = new THREE.Scene();
-    this._camera = new THREE.PerspectiveCamera(
+    this._mainCamera = new THREE.PerspectiveCamera(
       25,
       window.innerWidth / window.innerHeight,
       1,
       1000
     );
-    this._camera.position.set(100, 50, 107);
+    this._mainCamera.position.set(100, 50, 107);
+    this._mainCamera.lookAt(0, 50, 0);
+    this._activeCamera = this._mainCamera;
 
     const canvas = document.getElementById(this._canvasId) as HTMLCanvasElement;
     if (!canvas) {
@@ -53,15 +56,15 @@ export default class Three {
   }
 
   private initOrbitControls(): void {
-    this._orbitControls = new OrbitControls(
-      this._camera,
-      this._renderer.domElement
-    );
-    this._orbitControls.target.set(0, 50, 0);
-    this._orbitControls.autoRotateSpeed = 0.5;
-    this._orbitControls.autoRotate = true;
-    this._orbitControls.enabled = false;
-    this._orbitControls.update();
+    // this._orbitControls = new OrbitControls(
+    //   this._mainCamera,
+    //   this._renderer.domElement
+    // );
+    // this._orbitControls.target.set(0, 50, 0);
+    // this._orbitControls.autoRotateSpeed = 0.5;
+    // this._orbitControls.autoRotate = true;
+    // this._orbitControls.enabled = false;
+    // this._orbitControls.update();
   }
 
   public animate(callback: () => void = () => {}): void {
@@ -73,12 +76,12 @@ export default class Three {
   }
 
   private render(): void {
-    this._renderer.render(this._scene, this._camera);
+    this._renderer.render(this._scene, this._activeCamera);
   }
 
   private onWindowResize(): void {
-    this._camera.aspect = window.innerWidth / window.innerHeight;
-    this._camera.updateProjectionMatrix();
+    this._mainCamera.aspect = window.innerWidth / window.innerHeight;
+    this._mainCamera.updateProjectionMatrix();
     this._renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
@@ -87,11 +90,19 @@ export default class Three {
   }
 
   get camera(): THREE.PerspectiveCamera {
-    return this._camera;
+    return this._mainCamera;
   }
 
   set camera(camera: THREE.PerspectiveCamera) {
-    this._camera = camera;
+    this._mainCamera = camera;
+  }
+
+  get activeCamera(): THREE.PerspectiveCamera {
+    return this._activeCamera;
+  }
+
+  set activeCamera(camera: THREE.PerspectiveCamera) {
+    this._activeCamera = camera;
   }
 
   get renderer(): THREE.WebGLRenderer {

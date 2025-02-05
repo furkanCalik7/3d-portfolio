@@ -10,6 +10,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProjectsPage from "./pages/projects";
 import ContactPage from "./pages/contact";
 import ScrollAnimation from "./three/ScrollAnimation";
+import Curve from "./three/Curve";
 
 const STAR_COUNT = 10000;
 
@@ -33,8 +34,20 @@ const App: React.FC = () => {
 };
 
 const initThree = () => {
-  const three = new Three("three", true);
+  const three = new Three("three", !import.meta.env.PROD);
   const scrollAnimation = new ScrollAnimation(three);
+
+  // loadTerrain(three);
+  // laodStarParticles(three);
+  loadCurve(three);
+
+  three.camera.position.set(100, 50, 107);
+  three.animate(() => {
+    scrollAnimation.animate();
+  });
+};
+
+const loadTerrain = (three: Three) => {
   const textureLoader = new THREE.TextureLoader();
 
   textureLoader.load(
@@ -46,16 +59,21 @@ const initThree = () => {
       terrain.setRotationFromQuaternion(quaternion);
       terrain.scale.multiplyScalar(10);
       three.scene.add(terrain);
-
-      const stars = generateStarParticles(STAR_COUNT, three.camera);
-      three.scene.add(stars);
     }
   );
+};
 
-  three.camera.position.set(100, 50, 107);
-  three.animate(() => {
-    scrollAnimation.animate();
-  });
+const laodStarParticles = (three: Three) => {
+  const stars = generateStarParticles(STAR_COUNT, three.camera);
+  three.scene.add(stars);
+};
+
+const loadCurve = (three: Three) => {
+  const curve = new Curve(three, [
+    new THREE.Vector3(20, 20, 20),
+    new THREE.Vector3(20, 5, 10),
+    new THREE.Vector3(20, 0, -10),
+  ]);
 };
 
 export default App;
