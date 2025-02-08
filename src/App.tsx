@@ -12,6 +12,7 @@ import ScrollAnimation from "./three/ScrollAnimation";
 import Curve from "./three/Curve";
 import GUI from "lil-gui";
 import { ThreeDebugger } from "./three/ThreeDebugger";
+import HomePage from "./pages/home";
 
 const STAR_COUNT = 10000;
 const THREE_CANVAS_REF_NAME = "three";
@@ -26,7 +27,7 @@ const App: React.FC = () => {
       <canvas id={THREE_CANVAS_REF_NAME}></canvas>
       <Navbar>
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<HomePage></HomePage>} />
           <Route path="/projects" element={<ProjectsPage></ProjectsPage>} />
           <Route path="/contact" element={<ContactPage></ContactPage>} />
         </Routes>
@@ -47,15 +48,15 @@ const initThree = () => {
 
   const scrollAnimation = new ScrollAnimation(three);
 
-  // loadTerrain(three);
-  // laodStarParticles(three);
-  const curve = loadCurve(three);
+  loadTerrain(three);
+  laodStarParticles(three);
+  // const curve = loadCurve(three);
 
   three.camera.position.set(100, 50, 107);
   three.animate(() => {
     scrollAnimation.animate();
     if (!import.meta.env.PROD) {
-      curve.updateSpline();
+      // curve.updateSpline();
       threeDebugger?.update();
     }
   });
